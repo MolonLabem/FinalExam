@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/commentsFragment">
+
+    <fragment
+        android:id="@+id/detailedInfo"
+        android:name="com.android.developerjobs.view.DetailedInfo"
+        android:label="DetailedInfo">
+        <action
+            android:id="@+id/action_detailedInfo_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
+        <argument
+            android:name="post"
+            app:argType="com.android.developerjobs.model.Post">
+
+        </argument>
+    </fragment>
+
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.android.developerjobs.view.CommentsFragment"
+        android:label="CommentsFragment" />
+
+    <fragment
+        android:id="@+id/jobListFragment3"
+        android:name="com.android.developerjobs.view.JobListFragment"
+        android:label="JobListFragment">
+        <action
+            android:id="@+id/action_jobListFragment3_to_detailedInfo"
+            app:destination="@id/detailedInfo" />
+    </fragment>
+</navigation>
