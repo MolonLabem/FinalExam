@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.finalexam.R
 import com.android.finalexam.adapter.ListAdapter
 import com.android.finalexam.adapter.NewsAdapter
 import com.android.finalexam.model.Country
+import com.android.finalexam.repository.NewsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class CountriesListFragment {
+class CountriesListFragment: Fragment() {
 
     private var countriesAdapter: ListAdapter? = null
     private val countriesList: MutableList<Country> = mutableListOf()
@@ -26,13 +28,13 @@ class CountriesListFragment {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
 
-        repository.getNews()
+        NewsRepository.getNews(category, country)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
                 {
-                    jobAdapter?.addItems(it)
-                    jobsList.addAll(it)
+                    ListAdapter?.addItems(it)
+                    NewsList.addAll(it)
                 },
                 {
                     // TODO handle error
@@ -42,14 +44,14 @@ class CountriesListFragment {
 
     private fun initAdapter() {
         newsAdapter = NewsAdapter(
-            newsClickListener = {
+            NewsClickListener = {
                 goToDetails(it)
             }
         )
         val manager = LinearLayoutManager(context)
-        jobsRecyclerView.apply {
+        newsRecyclerView.apply {
             layoutManager = manager
-            adapter = jobAdapter
+            adapter = ListAdapter
         }
     }
 
